@@ -1,0 +1,224 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Blog {
+  id: String!
+  title: String!
+  hook: String!
+  description: String!
+  active: Boolean!
+  appSecret: String!
+  userSecret: String!
+  createDate: String!
+}
+
+type Notification {
+  id: String!
+  title: String!
+  content: String!
+  email: Boolean!
+  createDate: String!
+}
+
+type Content {
+  title: String!
+  publishAt: String!
+  content: String!
+  pageTitle: String!
+  slug: String!
+  keywords: String!
+  description: String!
+  images: [String!]!
+  altTags: [String!]!
+}
+
+type Post {
+  _id: String!
+  appId: String!
+  post: Content!
+  active: Boolean!
+  modifiedDate: String!
+  createDate: String!
+  appSecret: String!
+  userSecret: String!
+}
+
+type Months {
+  jan: Int!
+  feb: Int!
+  mar: Int!
+  apr: Int!
+  may: Int!
+  jun: Int!
+  jul: Int!
+  aug: Int!
+  sep: Int!
+  oct: Int!
+  nov: Int!
+  dec: Int!
+}
+
+type User {
+  id: String!
+  email: String!
+  username: String!
+  firstName: String!
+  lastName: String!
+  company: String!
+  title: String!
+  country: String!
+  website: String!
+  notifications: Boolean!
+}
+
+type Metrics {
+  blogs: Int!
+  pendingPosts: Int!
+  activePosts: Int!
+  images: Int!
+  postHistory: Months!
+}
+
+type JWT {
+  accessToken: String!
+}
+
+type Gallery {
+  id: String!
+  name: String!
+  description: String!
+  images: [String!]!
+}
+
+type GalleryList {
+  id: String!
+  name: String!
+  description: String!
+  blog: Boolean!
+}
+
+type Query {
+  getUser: User!
+  getMetrics: Metrics!
+  getAllBlogs: [Blog!]!
+  getBlog(appId: String!): Blog!
+  getAllPosts: [Post!]!
+  getPost(postId: String!): Post!
+  searchPosts(title: String!): [Post!]!
+  getBlogPost(appId: String!): [Post!]!
+  getNotifications: [Notification!]!
+  getGallery(galleryId: String!): Gallery!
+  getGalleryList: [GalleryList!]!
+}
+
+type Mutation {
+  loginUser(loginUserData: LoginUser!): JWT!
+  validateUser: JWT!
+  addUser(newUpdateData: CreateUser!): Boolean!
+  updateUser(updateUserData: UpdateUser!): Boolean!
+  addBlog(newBlogData: CreateBlog!): Boolean!
+  updateBlog(updateBlogData: UpdateBlog!): Boolean!
+  removeBlog(appId: String!): Boolean!
+  addPost(newPostData: CreatePost!): Boolean!
+  updatePost(updatePostData: UpdatePost!): Boolean!
+  removeImage(removePostImage: RemoveImage!): Boolean!
+  removePost(postId: String!): Boolean!
+  removeNotification(deleteNotificationData: NotificationDelete!): Boolean!
+  addGallery(newGalleryData: CreateGallery!): Boolean!
+  updateGallery(updateGalleryData: UpdateGallery!): Boolean!
+  addGalleryImage(addGalleryImage: AddGalleryImage!): Boolean!
+  removeGallery(galleryId: String!): Boolean!
+  removeGalleryImage(removePostImage: RemoveGalleryImage!): Boolean!
+}
+
+input LoginUser {
+  email: String!
+  userId: String!
+}
+
+input CreateUser {
+  userId: String!
+  email: String!
+}
+
+input UpdateUser {
+  username: String!
+  firstName: String!
+  lastName: String!
+  company: String!
+  title: String!
+  country: String!
+  website: String!
+  notify: Boolean!
+}
+
+input CreateBlog {
+  title: String!
+  hook: String!
+  description: String!
+  active: Boolean!
+}
+
+input UpdateBlog {
+  appId: String!
+  title: String!
+  hook: String!
+  description: String!
+  active: Boolean!
+}
+
+input CreatePost {
+  appId: String!
+  post: PostContent!
+  active: Boolean!
+}
+
+input PostContent {
+  title: String!
+  publishAt: String!
+  content: String!
+  pageTitle: String!
+  slug: String!
+  keywords: String!
+  description: String!
+  images: [String!]!
+  altTags: [String!]!
+}
+
+input UpdatePost {
+  postId: String!
+  post: PostContent!
+  active: Boolean!
+}
+
+input RemoveImage {
+  postId: String!
+  post: PostContent!
+  image: String!
+}
+
+input NotificationDelete {
+  id: String!
+}
+
+input CreateGallery {
+  name: String!
+  description: String!
+}
+
+input UpdateGallery {
+  galleryId: String!
+  name: String!
+  description: String!
+}
+
+input AddGalleryImage {
+  galleryId: String!
+  images: [String!]!
+}
+
+input RemoveGalleryImage {
+  galleryId: String!
+  image: String!
+}

@@ -3,9 +3,10 @@ module.exports = {
     {
       name: 'object-press',
       script: 'node dist/main',
-      env_production: {
-        NODE_ENV: 'production',
-      },
+      instances: 1,
+      out_file: '/dev/null',
+      error_file: '/dev/null',
+      cron_restart: '0 0 * * *',
     },
   ],
 };

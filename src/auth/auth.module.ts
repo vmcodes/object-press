@@ -10,7 +10,7 @@ import { AuthResolver } from './auth.resolver';
   imports: [
     UserModule,
     JwtModule.register({
-      secret: constants.secret,
+      secret: constants.jwtSecret,
       signOptions: { expiresIn: 900 },
     }),
   ],

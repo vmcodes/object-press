@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    image: op-api
+    restart: always
+    ports:
+      - '4000:4000'
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '10m'

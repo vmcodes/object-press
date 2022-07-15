@@ -86,29 +86,60 @@ export class PostService {
   }
 
   async removeImage(user: JwtPayload, removeImage: RemoveImage) {
-    let post = {
+    const content = await this.postModel.findOne({
       _id: removeImage.postId,
       userId: user.sub,
-      post: removeImage.post,
-      modifiedDate: new Date().toISOString(),
-    };
+    });
 
     try {
-      const updatedPost = new this.postModel(post);
+      const post = content.post;
+      const images = post.images;
+      const altTags = post.altTags;
+
+      const altIndex = post.images.indexOf(removeImage.image);
+      const altArr = altTags.filter((tag, index) => {
+        if (index !== altIndex) {
+          return tag;
+        }
+      });
+
+      const imagesArr = images.filter((image) => {
+        if (image !== removeImage.image) {
+          return image;
+        }
+      });
+
+      const update = {
+        _id: content._id,
+        post: {
+          title: post.title,
+          publishAt: post.publishAt,
+          content: post.content,
+          pageTitle: post.pageTitle,
+          slug: post.slug,
+          keywords: post.keywords,
+          description: post.description,
+          images: imagesArr,
+          altTags: altArr,
+        },
+        modifiedDate: new Date().toISOString(),
+      };
+
+      const updatedPost = new this.postModel(update);
       await updatedPost.updateOne(updatedPost);
 
-      const imagePath = removeImage.image.split('/')[2];
-      console.log(imagePath);
+      // const imagePath = removeImage.image.split('/')[2];
+      // console.log(imagePath);
 
-      const s3 = new AWS.S3();
-
-      await s3.deleteObject(
-        { Bucket: 'objectpress', Key: imagePath },
-        (err, data) => {
-          console.error(err);
-          console.log(data);
-        }
-      );
+      // const s3 = new AWS.S3();
+      //
+      // await s3.deleteObject(
+      //   { Bucket: 'objectpress', Key: imagePath },
+      //   (err, data) => {
+      //     console.error(err);
+      //     console.log(data);
+      //   }
+      // );
 
       return true;
     } catch (e) {

@@ -82,10 +82,6 @@ export class RemoveImage {
   postId: string;
 
   @Field()
-  @IsNotEmptyObject()
-  post: PostContent;
-
-  @Field()
   @IsString()
   image: string;
 }

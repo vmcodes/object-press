@@ -102,7 +102,7 @@ export class GalleryService {
       (image) => image !== removeImage.image
     );
 
-    let newGallery = {
+    const newGallery = {
       _id: removeImage.galleryId,
       userId: user.sub,
       images: images,
@@ -113,21 +113,21 @@ export class GalleryService {
       const updatedGallery = new this.galleryModel(newGallery);
       await updatedGallery.updateOne(updatedGallery);
 
-      const imagePath = removeImage.image.replace(
-        'https://share.objectpress.io',
-        ''
-      );
-      console.log(imagePath);
-
-      const s3 = new AWS.S3();
-
-      await s3.deleteObject(
-        { Bucket: 'objectpress', Key: imagePath },
-        (err, data) => {
-          console.error(err);
-          console.log(data);
-        }
-      );
+      // const imagePath = removeImage.image.replace(
+      //   'https://share.objectpress.io',
+      //   ''
+      // );
+      // console.log(imagePath);
+      //
+      // const s3 = new AWS.S3();
+      //
+      // await s3.deleteObject(
+      //   { Bucket: 'objectpress', Key: imagePath },
+      //   (err, data) => {
+      //     console.error(err);
+      //     console.log(data);
+      //   }
+      // );
 
       return true;
     } catch (e) {

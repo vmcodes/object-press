@@ -14,7 +14,7 @@ export class NotificationService {
   ) {}
 
   async create(user: JwtPayload, data: NotificationInput) {
-    let message = Object.assign(data, {
+    const message = Object.assign(data, {
       userId: user.sub,
       createDate: new Date().toISOString(),
     });

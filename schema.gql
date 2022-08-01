@@ -95,7 +95,7 @@ type GalleryList {
   id: String!
   name: String!
   description: String!
-  blog: Boolean!
+  images: [String!]!
 }
 
 type Query {

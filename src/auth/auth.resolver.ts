@@ -18,7 +18,7 @@ export class AuthResolver {
 
   @UseGuards(JwtAuthGuard)
   @Mutation((returns) => JWT)
-  async validateUser(@CurrentUser() user: JwtPayload) {
+  async validateUser(@CurrentUser() user: JwtPayload): Promise<JWT> {
     return await this.authService.validate(user);
   }
 }

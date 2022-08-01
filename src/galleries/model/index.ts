@@ -26,6 +26,6 @@ export class GalleryList {
   @Field({ nullable: false })
   description: string;
 
-  @Field({ nullable: false })
-  blog: boolean;
+  @Field((type) => [String])
+  images: string[];
 }

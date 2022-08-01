@@ -15,30 +15,24 @@ export class AuthService {
       await this.userService.login(loginUser);
       const user = await this.userService.findOne(loginUser);
 
-      let token = { sub: user.id };
+      const token = { sub: user.id };
 
-      return {
-        accessToken: this.jwtService.sign(token),
-      };
+      return { accessToken: this.jwtService.sign(token) };
     } catch {
       const user = await this.userService.create(loginUser);
 
-      let token = { sub: user.id };
+      const token = { sub: user.id };
 
-      return {
-        accessToken: this.jwtService.sign(token),
-      };
+      return { accessToken: this.jwtService.sign(token) };
     }
   }
 
   async validate(jwtPayload: JwtPayload) {
     try {
       const user = await this.userService.findUser(jwtPayload);
-      let token = { sub: user.id };
+      const token = { sub: user.id };
 
-      return {
-        accessToken: this.jwtService.sign(token),
-      };
+      return { accessToken: this.jwtService.sign(token) };
     } catch {
       throw new UnauthorizedException();
     }

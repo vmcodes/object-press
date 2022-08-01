@@ -29,7 +29,7 @@ export class GalleryService {
 
   async create(user: JwtPayload, newGallery: CreateGallery) {
     try {
-      let gallery = {
+      const gallery = {
         userId: user.sub,
         images: [],
         createDate: new Date().toISOString(),
@@ -49,7 +49,7 @@ export class GalleryService {
   }
 
   async update(user: JwtPayload, updateGallery: UpdateGallery) {
-    let gallery = {
+    const gallery = {
       _id: updateGallery.galleryId,
       userId: user.sub,
       name: updateGallery.name,
@@ -75,7 +75,7 @@ export class GalleryService {
       userId: user.sub,
     });
 
-    let images = {
+    const images = {
       _id: addImage.galleryId,
       userId: user.sub,
       images: [...gallery.images, ...addImage.images],
@@ -144,22 +144,22 @@ export class GalleryService {
         userId: user.sub,
       });
 
-      const s3 = new AWS.S3();
+      // const s3 = new AWS.S3();
 
-      if (gallery.images[0]) {
-        for (const image in gallery) {
-          let imagePath = gallery.images[image].split('/')[2];
-          console.log(imagePath);
-
-          await s3.deleteObject(
-            { Bucket: 'objectpress', Key: imagePath },
-            (err, data) => {
-              console.error(err);
-              console.log(data);
-            }
-          );
-        }
-      }
+      // if (gallery.images[0]) {
+      //   for (const image in gallery) {
+      //     const imagePath = gallery.images[image].split('/')[2];
+      //     console.log(imagePath);
+      //
+      //     await s3.deleteObject(
+      //       { Bucket: 'objectpress', Key: imagePath },
+      //       (err, data) => {
+      //         console.error(err);
+      //         console.log(data);
+      //       }
+      //     );
+      //   }
+      // }
 
       await this.galleryModel.deleteOne({
         _id: args.galleryId,
@@ -181,24 +181,24 @@ export class GalleryService {
       userId: user.sub,
     });
 
-    const blogNames = blogs.map((_) => {
-      return {
-        name: _.title,
-        id: _.id,
-        description: _.description,
-        blog: true,
-      };
-    });
+    // const blogNames = blogs.map((_) => {
+    //   return {
+    //     name: _.title,
+    //     id: _.id,
+    //     description: _.description,
+    //     blog: true,
+    //   };
+    // });
     const galleryNames = galleries.map((_) => {
       return {
         name: _.name,
         id: _.id,
         description: _.description,
-        blog: false,
+        images: _.images,
       };
     });
 
-    let galleryList: GalleryList[] = [...blogNames, ...galleryNames];
+    const galleryList: GalleryList[] = [...galleryNames];
 
     galleryList.sort((a, b) => a.name.localeCompare(b.name));
 

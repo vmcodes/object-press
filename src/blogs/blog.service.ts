@@ -19,17 +19,17 @@ export class BlogService {
   ) {}
 
   async create(user: JwtPayload, newBlog: CreateBlog) {
-    let id = uuid4();
+    const id = uuid4();
 
-    let blogSecret = createHmac('SHA256', constants.blogSecret)
+    const blogSecret = createHmac('SHA256', constants.blogSecret)
       .update(id)
       .digest('base64');
 
-    let userSecret = createHmac('SHA256', constants.userSecret)
+    const userSecret = createHmac('SHA256', constants.userSecret)
       .update(user.sub)
       .digest('base64');
 
-    let blog = {
+    const blog = {
       userId: user.sub,
       appSecret: blogSecret,
       userSecret: userSecret,
@@ -45,7 +45,7 @@ export class BlogService {
       const createdBlog = new this.blogModel(blog);
       await createdBlog.save();
 
-      let data = {
+      const data = {
         title: `New Blog!`,
         content: `Congrats on your new blog '${newBlog.title}', now it's time to make your first post!`,
         email: false,
@@ -60,7 +60,7 @@ export class BlogService {
   }
 
   async update(updateBlog: UpdateBlog) {
-    let blog = {
+    const blog = {
       _id: updateBlog.appId,
       title: updateBlog.title,
       hook: updateBlog?.hook || '',

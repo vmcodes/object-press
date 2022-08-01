@@ -34,9 +34,11 @@ export class PostService {
 
   async create(user: JwtPayload, createPost: CreatePost) {
     try {
-      let blog: Blog = await this.blogModel.findOne({ _id: createPost.appId });
+      const blog: Blog = await this.blogModel.findOne({
+        _id: createPost.appId,
+      });
 
-      let post = {
+      const post = {
         userId: user.sub,
         createDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
@@ -48,7 +50,7 @@ export class PostService {
       const createdPost = new this.postModel(post);
       await createdPost.save();
 
-      let data = {
+      const data = {
         title: `New Post!`,
         content: `Your recent post was successfully created!`,
         email: false,
@@ -65,7 +67,7 @@ export class PostService {
   }
 
   async update(user: JwtPayload, updatePost: UpdatePost) {
-    let post = {
+    const post = {
       _id: updatePost.postId,
       userId: user.sub,
       post: updatePost.post,
@@ -178,7 +180,7 @@ export class PostService {
       userId: user.sub,
     });
 
-    let posts = await search(blogs, ['post.title'], searchTitles.title);
+    const posts = await search(blogs, ['post.title'], searchTitles.title);
 
     return sortPosts(posts, 'post', 'publishAt');
   }
@@ -191,7 +193,7 @@ export class PostService {
   }
 
   async findBlog(user: JwtPayload, args: BlogArgs): Promise<Post[]> {
-    let posts = await this.postModel.find({
+    const posts = await this.postModel.find({
       userId: user.sub,
       appId: args.appId,
     });

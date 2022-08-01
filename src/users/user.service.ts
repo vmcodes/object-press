@@ -44,11 +44,11 @@ export class UserService {
         userId: newUsersData.userId,
       });
 
-      let notify = {
+      const notify = {
         sub: JSON.stringify(user._id),
       };
 
-      let data = {
+      const data = {
         title: `Welcome!`,
         content: `Welcome to Object Press! Please reach out if you have any questions and check out the documentation to learn more!`,
         email: false,
@@ -74,7 +74,7 @@ export class UserService {
 
   // login
   async login(loginUserData: CreateUser): Promise<User> {
-    let user = await this.userModel.findOne({ userId: loginUserData.userId });
+    const user = await this.userModel.findOne({ userId: loginUserData.userId });
 
     Object.assign(user, {
       modifiedDate: new Date().toISOString(),
@@ -88,7 +88,7 @@ export class UserService {
 
   // update user profile
   async update(user: JwtPayload, updateUserData: UpdateUser) {
-    let profile = {
+    const profile = {
       _id: user.sub,
       username: updateUserData.username,
       firstName: updateUserData?.firstName,
@@ -136,7 +136,7 @@ export class UserService {
       }
     });
 
-    let totals = posts.map((post) => post.createDate);
+    const totals = posts.map((post) => post.createDate);
     const history = postHistory(totals);
 
     const metrics = {

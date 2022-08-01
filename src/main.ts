@@ -18,7 +18,7 @@ async function bootstrap() {
   );
 
   await app.listen(4000);
-  console.log(`NEST (${process.pid}) IS RUNNING ON `, 4000);
+  console.log(`NEST (${process.pid}) IS RUNNING ON:`, 4000);
 }
 
 ClusterService.clusterize(bootstrap);
